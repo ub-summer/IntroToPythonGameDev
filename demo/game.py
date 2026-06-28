@@ -31,6 +31,15 @@ projectile_cooldown = 0
 
 spawn_countdown = 0
 
+score = 0
+
+def place_text(text, at):
+    font = pygame.font.Font(pygame.font.match_font("freesansbold"), 12)
+    t = font.render(text, False, "#306230")
+    rect = t.get_rect()
+    rect.center = at
+    screen.blit(t, rect)
+
 def place_image(filename, pos):
     image = pygame.image.load(filename)
     screen.blit(image, pos)
@@ -89,7 +98,7 @@ while running:
 
     # spawn in new enemies randomly
     if spawn_countdown == 0:
-        create_enemy(Vector2(random.randint(20, 140), random.randint(4, 70)))
+        create_enemy(Vector2(random.randint(20, 140), random.randint(16, 70)))
         spawn_countdown = random.uniform(0.1, 4)
 
     # handle enemies
@@ -110,6 +119,7 @@ while running:
             if check_rect(proj_location, BULLET_SIZE, pos, ENEMY_SIZE):
                 enemy["alive"] = False
                 play_sound("ahhhhh_cut.mp3")
+                score += 1
 
         if enemy["alive"]:
             place_image("cat_face.png", enemy["position"])
@@ -135,10 +145,17 @@ while running:
             player_pos = Vector2(random.randint(20, 120), PLAYER_START_Y)
             play_sound("ahhhhh_cut.mp3")
 
+
+    new_projectiles = []
+
     # move and draw projectiles
     for proj_location, proj_velocity in projectiles:
         proj_location += proj_velocity
         place_image("bullet.png", proj_location)
+        if proj_location.y > 0:
+            new_projectiles.append((proj_location, proj_velocity))
+
+    projectiles = new_projectiles
 
     # check user input
     keys = pygame.key.get_pressed()
@@ -174,6 +191,10 @@ while running:
 
     # place the player at their position
     place_image("player2.png", player_pos)
+
+    pygame.draw.rect(screen, "#9BBC0F", pygame.rect.Rect(0, 0, 160, 12))
+
+    place_text(str(score), Vector2(screen.get_width() // 2, 7))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
