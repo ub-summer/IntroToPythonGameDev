@@ -7,7 +7,7 @@ clock = pygame.time.Clock()
 running = True
 down = False
 
-bg_color = pygame.Color(40, 97, 38)
+bg_color = (40, 97, 38)
 screen.fill(bg_color)
 
 while running:

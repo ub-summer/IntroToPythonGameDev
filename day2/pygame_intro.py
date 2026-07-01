@@ -9,7 +9,7 @@ running = True
 player_speed = 6
 player_location = [500, 250]
 
-bg_color = pygame.Color(40, 97, 38)
+bg_color = (40, 97, 38)
 
 while running:
     screen.fill(bg_color)
