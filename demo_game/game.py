@@ -136,7 +136,7 @@ while running:
     for proj_location, proj_velocity in evil_projectiles:
         proj_location += proj_velocity
         img = pygame.image.load("bullet.png")
-        img = pygame.transform.rotate(img, 270 + proj_velocity.angle)
+        # img = pygame.transform.rotate(img, 270 + proj_velocity.angle)
         img = pygame.transform.flip(img, False, True)
         screen.blit(img, proj_location)
 
